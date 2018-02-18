@@ -21,6 +21,6 @@ import numpy as np
 import pickle as pk
 from torch.autograd import Variable
 
-1. Run the program as : python hw2.py or python hw2.py --data {path to the atis.small.pkl.gz file}
+1. Run the program as : python NerMain.py or python NerMain.py --data {path to the atis.small.pkl.gz file}
 2. make sure conlleval.pl is present in the same folder
 3. Also i have included my model.pkl in the same folder. Its the trained model which I have trained
