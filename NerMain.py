@@ -1,3 +1,12 @@
+# This is the main script to perform Named Entity Recognition using Deep Maximum Entropy Markov model
+# WordVecFeature class makes the wordvectors for the words in the sentences and for the tags in the 
+# tag sequence.It also generats the training data that appends the present word's wordvector and 
+# previous tag word vector.The neural network is used to predict the tag probabilities and 
+# Viterbi algorithm is used to find the best tag sequence. A perl scripts evaluates the models 
+# accuracy and fscore. The input data is in the form of word indexes and tag indexes and two dictionaries are
+# provided to convert these indexes to their repective word and tag
+# 
+
 import subprocess
 import argparse
 import sys
@@ -48,6 +57,8 @@ class WordVecFeatures():
         tag_vec = self.embeds_tag(autograd.Variable(lookup_tensor))
         return tag_vec
     
+
+    # generating the input data
     def featGenTrain(self,train_lex,train_y):
         feat_train = torch.FloatTensor(1,self.n_word_vec + self.n_tag).zero_()
         # now this is a dummy thing please remember !!
@@ -70,6 +81,7 @@ class WordVecFeatures():
             print "Train {} made".format(i)
         return feat_train,feat_train_y
     
+    # making the tag vector
     def makeTagVec(self):
         tag_vec_all = torch.FloatTensor(1,self.n_tag).zero_()
         for i in range(1,len(self.idx2label)):
@@ -165,6 +177,7 @@ def viterbiAlgo(w_vec_test_lst,net):
         tokens.append(back[tokens[-1],i])
     return tokens[::-1]
 
+# neural network
 class Net(nn.Module):
     def __init__(self, input_size, hidden_size, num_classes):
         super(Net, self).__init__()
